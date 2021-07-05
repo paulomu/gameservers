@@ -1,7 +1,5 @@
 FROM steamcmd/steamcmd:ubuntu-20
 
-LABEL org.label-schema.vcs-url="https://github.com/paulomu/gameservers"
-
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends gosu libtinfo5:i386 libsdl2-2.0-0:i386; \
