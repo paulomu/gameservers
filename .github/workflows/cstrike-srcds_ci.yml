@@ -5,8 +5,15 @@ on:
   push:
     branches:
       - 'master'
+    tags:
+      - 'v*'
     paths:
-      - cstrike-srcds
+      - 'cstrike-srcds/**'
+  pull_request:
+    branches:
+      - 'master'
+    paths:
+      - 'cstrike-srcds/**'
 
 jobs:
   build-and-push:
@@ -15,7 +22,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: paulomu/cstrike-srcds
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
       - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -25,5 +43,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./cstrike-srcds
-          push: true
-          tags: paulomu/cstrike-srcds:latest 
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

@@ -1,6 +1,6 @@
 ## Counter-Strike: Source Dedicated Server ([`cstrike-srcds`](cstrike-srcds/))
 
-![ci](https://github.com/paulomu/gameservers/actions/workflows/cstrike-srcds_ci.yml/badge.svg)
+[![ci](https://github.com/paulomu/gameservers/actions/workflows/cstrike-srcds_ci.yml/badge.svg)](https://github.com/paulomu/gameservers/actions?query=workflow:%22GitHub%20CI:%20cstrike-srcds%22%20branch:master)
 
 A Docker image running [srcds](https://steamdb.info/app/232330) with minimal configuration, based on [steamcmd:ubuntu-20](https://github.com/steamcmd/docker/blob/master/dockerfiles/ubuntu-20/Dockerfile). Server and game files should be downloaded in runtime on the container, therefore this image should not contain files such as maps, textures, mods, etc in order to keep it as tidy, unopinionated and copyright-hassle-free as possible. Server runs as the non-root `srcds` user.
 
