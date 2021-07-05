@@ -8,7 +8,35 @@ A first container's boot will download all the server files to `/var/lib/srcds/d
 
 ## Usage
 
-Start the `cstrike-srcds` service in background:
+```
+docker run \
+    -it \
+    --name cstrike-srcds \
+    -v cstrike-srcds:/var/lib/srcds/data \
+    -p 27015:27015/tcp \
+    -p 27015:27015/udp \
+    -p 27020:27020/udp \
+    paulomu/cstrike-srcds:latest \
+    +map de_nuke \
+    +hostname "Docker Server"
+    [srcds args, eg. +maxplayers 32...]
+```
+
+See: [Command Line Options](https://developer.valvesoftware.com/wiki/Command_Line_Options#Source_Dedicated_Server) and [List of CS:S Cvars](https://developer.valvesoftware.com/wiki/List_of_CS:S_Cvars) for srcds args.
+
+Background (detached) mode: `docker run -dit ...` 
+
+Attach to the srcds console when running in background:
+
+```
+docker attach cstrike-srcds
+```
+
+>`CTRL-c` quits the srcds process; use `CTRL-p CTRL-q` to detach, or `--detach-keys="<sequence>"` to [override](https://docs.docker.com/engine/reference/commandline/attach/#override-the-detach-sequence) it.
+
+### With docker-compose
+
+Clone this repository, then start the `cstrike-srcds` service in background:
 
 ```
 docker-compose up -d cstrike-srcds
@@ -21,24 +49,6 @@ Start an one-off `cstrike-srcds` service instance in foreground with custom para
 ```
 docker-compose run --service-ports cstrike-srcds +map de_inferno +maxplayers 32
 ```
-
-With `docker run`:
-
-```
-docker run \
-    -it \
-    --name cstrike-srcds \
-    -v $(pwd):/var/lib/srcds/data \
-    -p 27015:27015/tcp \
-    -p 27015:27015/udp \
-    -p 27020:27020/udp \
-    paulomu/cstrike-srcds:latest \
-    +map de_nuke \
-    +hostname "Docker Server"
-    [+maxplayers 32...]
-```
-
-See: [Command Line Options](https://developer.valvesoftware.com/wiki/Command_Line_Options#Source_Dedicated_Server) and [List of CS:S Cvars](https://developer.valvesoftware.com/wiki/List_of_CS:S_Cvars).
 
 Validating server files:
 
