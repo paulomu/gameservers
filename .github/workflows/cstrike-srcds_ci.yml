@@ -26,3 +26,4 @@ jobs:
         with:
           context: ./cstrike-srcds
           push: true
+          tags: paulomu/cstrike-srcds:latest 
