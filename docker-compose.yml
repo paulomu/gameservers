@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  cstrike-srcds:
+    build: 
+      context: ./cstrike-srcds
+    image: paulomu/cstrike-srcds:latest
+    stop_signal: SIGINT
+    command: [ 
+      "/var/lib/srcds/data/srcds_run", 
+      "-game", "cstrike", 
+      "-strictportbind", 
+      "-ip", "0.0.0.0",
+      "+map", "de_dust2"
+    ]
+    networks:
+      - shared
+    ports:
+      - "27015:27015/tcp" # SRCDS RCON port
+      - "27015:27015/udp" # Gameplay traffic
+      - "27020:27020/udp" # SourceTV
+    volumes:
+      - cstrike-srcds:/var/lib/srcds/data
+    stdin_open: true
+    tty: true
+
+networks:
+  shared:
+
+volumes:
+  cstrike-srcds:
