@@ -5,10 +5,8 @@ services:
     build: 
       context: ./cstrike-srcds
     image: paulomu/cstrike-srcds:latest
-    stop_signal: SIGINT
+    init: true
     command: [ 
-      "/var/lib/srcds/data/srcds_run", 
-      "-game", "cstrike", 
       "-strictportbind", 
       "-ip", "0.0.0.0",
       "+map", "de_dust2"

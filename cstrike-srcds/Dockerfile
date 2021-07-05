@@ -28,4 +28,4 @@ EXPOSE 27015/tcp 27015/udp 27020/udp
 
 STOPSIGNAL SIGINT
 
-CMD [ "/var/lib/srcds/data/srcds_run" ]
+CMD [ "+map", "de_dust2" ]
