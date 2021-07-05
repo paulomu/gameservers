@@ -1,6 +1,7 @@
 name: 'GitHub CI: cstrike-srcds'
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'master'
