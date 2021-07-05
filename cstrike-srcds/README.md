@@ -8,7 +8,7 @@ A first container's boot will download all the server files to `/var/lib/srcds/d
 
 ## Usage
 
-```
+```shell
 docker run \
     -it \
     --name cstrike-srcds \
@@ -17,12 +17,21 @@ docker run \
     -p 27015:27015/udp \
     -p 27020:27020/udp \
     paulomu/cstrike-srcds:latest \
-    +map de_nuke \
-    +hostname "Docker Server"
-    [srcds args, eg. +maxplayers 32...]
+    +map de_dust2
 ```
 
-See: [Command Line Options](https://developer.valvesoftware.com/wiki/Command_Line_Options#Source_Dedicated_Server) and [List of CS:S Cvars](https://developer.valvesoftware.com/wiki/List_of_CS:S_Cvars) for srcds args.
+Common/useful cvars: 
+
+```
++sv_lan <0/1> - If set to 1, server is only available in LAN.
++hostname "Hostname" - Specifies the name of the server (Spaces between words won't work here!).
++maxplayers <number> - Specifies how many player slots the server can contain.
++map <map> - Specifies which map to start.
++password <password> - Specifies the server password.
++rcon_password <changeme> - Specifies the RCON password.
+```
+
+See: [Command Line Options](https://developer.valvesoftware.com/wiki/Command_Line_Options#Source_Dedicated_Server) and [List of CS:S Cvars](https://developer.valvesoftware.com/wiki/List_of_CS:S_Cvars) for srcds args/cvars.
 
 Background (detached) mode: `docker run -dit ...` 
 
