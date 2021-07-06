@@ -2,7 +2,7 @@
 
 ## Docker image
 
-[![ci](https://github.com/paulomu/gameservers/actions/workflows/cstrike-srcds_ci.yml/badge.svg)](https://github.com/paulomu/gameservers/actions?query=workflow:%22GitHub%20CI:%20cstrike-srcds%22%20branch:master)
+[![ci](https://github.com/paulomu/gameservers/actions/workflows/cstrike-srcds.yml/badge.svg)](https://github.com/paulomu/gameservers/actions?query=workflow:%22GitHub%20CI:%20cstrike-srcds%22%20branch:master)
 
 A Docker image running [srcds](https://steamdb.info/app/232330) with minimal configuration, based on [steamcmd:ubuntu-20](https://github.com/steamcmd/docker/blob/master/dockerfiles/ubuntu-20/Dockerfile). Server runs as the non-root `srcds` user.
 
