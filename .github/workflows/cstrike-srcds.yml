@@ -34,6 +34,7 @@ jobs:
   build-metamod:
     name: Build+push metamod
     runs-on: ubuntu-latest
+    needs: build-ubuntu-20
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -53,6 +54,7 @@ jobs:
   build-sourcemod:
     name: Build+push sourcemod
     runs-on: ubuntu-latest
+    needs: build-metamod
     steps:
       - name: Checkout
         uses: actions/checkout@v2
