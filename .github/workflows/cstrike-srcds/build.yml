@@ -1,0 +1,84 @@
+name: 'GitHub CI: cstrike-srcds'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'cstrike-srcds/**'
+
+jobs:
+  build-ubuntu-20:
+    name: Build+push ubuntu-20
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./cstrike-srcds/ubuntu-20
+          push: true
+          tags: |
+            paulomu/cstrike-srcds:base
+            paulomu/cstrike-srcds:latest
+            paulomu/cstrike-srcds:ubuntu-20
+
+  build-metamod:
+    name: Build+push metamod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./cstrike-srcds/metamod
+          push: true
+          tags: paulomu/cstrike-srcds:metamod
+
+  build-metamod:
+    name: Build+push sourcemod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./cstrike-srcds/sourcemod
+          push: true
+          tags: paulomu/cstrike-srcds:sourcemod
+
+  update-dockerhub:
+    name: Update Docker Hub repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+          uses: actions/checkout@v2
+      - name: Update description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: paulomu/cstrike-srcds
+          readme-filepath: ./cstrike-srcds/README.md

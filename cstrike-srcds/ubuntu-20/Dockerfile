@@ -6,8 +6,8 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*; \
     gosu nobody true
 
-ENV SRCDS_HOME /var/lib/srcds
-ENV SRCDS_DATA $SRCDS_HOME/data
+ENV SRCDS_HOME=/var/lib/srcds
+ENV SRCDS_DATA=$SRCDS_HOME/data
 
 RUN set -eux; \
     groupadd -r srcds; \

@@ -3,9 +3,9 @@ version: "3.9"
 services:
   cstrike-srcds:
     build: 
-      context: ./cstrike-srcds
+      context: ./cstrike-srcds/ubuntu-20
     image: paulomu/cstrike-srcds:latest
-    init: true
+    env_file: ./cstrike-srcds/.env
     command: [ 
       "-strictportbind", 
       "-ip", "0.0.0.0",
@@ -19,6 +19,7 @@ services:
       - "27020:27020/udp" # SourceTV
     volumes:
       - cstrike-srcds:/var/lib/srcds/data
+    init: true
     stdin_open: true
     tty: true
 

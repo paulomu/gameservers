@@ -1,16 +1,25 @@
-# Counter-Strike: Source Dedicated Server ([`cstrike-srcds`](cstrike-srcds/))
+# Counter-Strike: Source Dedicated Server (`cstrike-srcds`)
+
+## Docker image
 
 [![ci](https://github.com/paulomu/gameservers/actions/workflows/cstrike-srcds_ci.yml/badge.svg)](https://github.com/paulomu/gameservers/actions?query=workflow:%22GitHub%20CI:%20cstrike-srcds%22%20branch:master)
 
-A Docker image running [srcds](https://steamdb.info/app/232330) with minimal configuration, based on [steamcmd:ubuntu-20](https://github.com/steamcmd/docker/blob/master/dockerfiles/ubuntu-20/Dockerfile). Server and game files will be downloaded in container runtime, therefore this image should not contain files such as maps, textures, mods, etc in order to keep it as tidy, unopinionated and copyright-hassle-free as possible. Server runs as the non-root `srcds` user.
+A Docker image running [srcds](https://steamdb.info/app/232330) with minimal configuration, based on [steamcmd:ubuntu-20](https://github.com/steamcmd/docker/blob/master/dockerfiles/ubuntu-20/Dockerfile). Server runs as the non-root `srcds` user.
 
 A first container's boot will download all the server files to `/var/lib/srcds/data` using [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD), and it's subsequent runs are expected to incrementally update those files when/if Steam releases a new server version. It's highly recommended to mount a persistent volume to that path, so you can recreate the container as many times you want while keeping the downloaded data. Applying Steam updates should only require you to restart or recreate the container instance, without having to rebuild or pull a newer version of this Docker image.
+
+## Tags
+
+- [`base`](ubuntu-20/), [`ubuntu-20`](ubuntu-20/), [`latest`](ubuntu-20/): base image
+- [`metamod`](metamod/): [`base`](ubuntu-20/) + [Metamod: Source](https://www.sourcemm.net/about)
+- [`sourcemod`](sourcemod/): [`metamod`](metamod/) + [SourceMod](https://www.sourcemod.net/about.php)
 
 ## Usage
 
 ```shell
 docker run \
     -it \
+    --init \
     --name cstrike-srcds \
     -v cstrike-srcds:/var/lib/srcds/data \
     -p 27015:27015/tcp \
@@ -20,15 +29,19 @@ docker run \
     +map de_dust2
 ```
 
-Common/useful cvars: 
+### Environment variables
+
+- `SRCDS_SV_PASSWORD` (optional): specifies the server password.
+- `SRCDS_TV_PASSWORD` (optional): specifies the Source TV client password.
+- `SRCDS_RCON_PASSWORD` (optional): specifies the RCON password.
+
+### Common/useful cvars: 
 
 ```
 +sv_lan <0/1> - If set to 1, server is only available in LAN.
 +hostname "Hostname" - Specifies the name of the server (Spaces between words won't work here!).
 +maxplayers <number> - Specifies how many player slots the server can contain.
 +map <map> - Specifies which map to start.
-+password <password> - Specifies the server password.
-+rcon_password <changeme> - Specifies the RCON password.
 ```
 
 See: [Command Line Options](https://developer.valvesoftware.com/wiki/Command_Line_Options#Source_Dedicated_Server) and [List of CS:S Cvars](https://developer.valvesoftware.com/wiki/List_of_CS:S_Cvars) for srcds args/cvars.
@@ -82,10 +95,9 @@ List of ports that are required to be open:
 - Inbound 27015/UDP: for gameplay traffic.
 - Inbound 27020/UDP: for [Source TV](https://developer.valvesoftware.com/wiki/SourceTV), if enabled.
 
-## Known issues/limitations
+## Building images
 
-- SIGINT stops srcds when the container runs in foreground, but not in detached
-  mode. Therefore, a container stop command results in timeout = SIGKILL. 
-  Dockerfile and docker-compose.yml have the explicit SIGINT config, and the
-  docker-entrypoint.sh calls `exec`, which should forward the signal. Not sure
-  how to fix this yet.
+- Metamod version can be set with `METAMOD_VERSION` arg.
+- SourceMod version can be set with `SOURCEMOD_VERSION` arg.
+
+## Known issues/limitations
