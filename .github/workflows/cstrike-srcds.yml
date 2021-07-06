@@ -50,7 +50,7 @@ jobs:
           push: true
           tags: paulomu/cstrike-srcds:metamod
 
-  build-metamod:
+  build-sourcemod:
     name: Build+push sourcemod
     runs-on: ubuntu-latest
     steps:
