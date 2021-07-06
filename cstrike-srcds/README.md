@@ -10,9 +10,9 @@ A first container's boot will download all the server files to `/var/lib/srcds/d
 
 ## Tags
 
-- [`base`](ubuntu-20/), [`ubuntu-20`](ubuntu-20/), [`latest`](ubuntu-20/): base image
-- [`metamod`](metamod/): [`base`](ubuntu-20/) + [Metamod: Source](https://www.sourcemm.net/about)
-- [`sourcemod`](sourcemod/): [`metamod`](metamod/) + [SourceMod](https://www.sourcemod.net/about.php)
+- [`base`, `ubuntu-20`, `latest`](https://github.com/paulomu/gameservers/blob/master/cstrike-srcds/ubuntu-20/Dockerfile): base image
+- [`metamod`](https://github.com/paulomu/gameservers/blob/master/cstrike-srcds/metamod/Dockerfile): `base` + [Metamod: Source](https://www.sourcemm.net/about)
+- [`sourcemod`](https://github.com/paulomu/gameservers/blob/master/cstrike-srcds/sourcemod/Dockerfile): `metamod` + [SourceMod](https://www.sourcemod.net/about.php)
 
 ## Usage
 
