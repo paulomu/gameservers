@@ -15,7 +15,7 @@
                     ]
                 },
                 "files": [
-                    "${workspaceFolder}/docker-compose.yml"
+                    "${workspaceFolder}/docker-compose.yaml"
                 ]
             }
         }

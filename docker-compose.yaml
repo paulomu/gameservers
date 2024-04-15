@@ -5,6 +5,7 @@ services:
     build: 
       context: ./cstrike-srcds/ubuntu-20
     image: paulomu/cstrike-srcds:latest
+    platform: linux/amd64
     env_file: ./cstrike-srcds/.env
     command: [ 
       "-strictportbind", 
