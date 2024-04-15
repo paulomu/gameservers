@@ -81,7 +81,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Update description
-        uses: peter-evans/dockerhub-description@v2
+        uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
