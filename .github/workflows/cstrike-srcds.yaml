@@ -1,12 +1,11 @@
 name: 'GitHub CI: cstrike-srcds'
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - 'master'
+      - '*'
     paths:
-      - '.github/workflows/cstrike-srcds.yml'
+      - '.github/workflows/cstrike-srcds.yaml'
       - 'cstrike-srcds/**'
 
 jobs:
@@ -25,7 +24,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./cstrike-srcds/ubuntu-20
+          context: ./cstrike-srcds
+          target: cstrike-srcds
           push: true
           tags: |
             paulomu/cstrike-srcds:base
@@ -48,7 +48,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./cstrike-srcds/metamod
+          context: ./cstrike-srcds
+          target: metamod
           push: true
           tags: paulomu/cstrike-srcds:metamod
 
@@ -68,7 +69,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./cstrike-srcds/sourcemod
+          context: ./cstrike-srcds
+          target: sourcemod
           push: true
           tags: paulomu/cstrike-srcds:sourcemod
 
